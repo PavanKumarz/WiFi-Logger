@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wifi_logger/services/api_service.dart';
+import 'package:wifi_logger/services/db_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -83,6 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => _status = 'Testing upload...');
     final upload = await ApiService.measureUploadSpeed();
     setState(() => _uploadSpeed = upload == -1 ? 0 : upload);
+
+    // Save to SQlite
+    await DbService.insertResult(
+      networkName: _networkName,
+      downloadSpeed: _downloadSpeed,
+      uploadSpeed: _uploadSpeed,
+      ping: _ping,
+      testedAt: _formattedTime(),
+    );
 
     setState(() {
       _isTesting = false;

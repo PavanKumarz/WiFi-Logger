@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  static const String baseUrl = 'http://10.77.185.73:3000';
+  static const String baseUrl = 'http://10.130.51.73:3000';
 
   static Future<bool> checkConnection() async {
     try {
